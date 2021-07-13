@@ -1,0 +1,2 @@
+# django-mall
+ django-mall
