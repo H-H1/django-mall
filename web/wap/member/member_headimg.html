@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title>设置头像</title>
+<link rel="stylesheet" type="text/css" href="../../static/css/base.css?201903">
+<link rel="stylesheet" type="text/css" href="../../static/css/nctouch_member.css?201903">
+<script type="text/javascript" src="../../static/js/host.js?201903"></script>
+<script src="../../static/js/vue-2.5.16.js?201903"></script>
+<script src="../../static/js/axios-0.18.0.min.js?201903"></script>
+</head>
+<body>
+<header id="header">
+	<div class="header-wrap">
+		<div class="header-l"><a href="member.html"><i class="back"></i></a></div>
+		<div class="header-title">
+			<h1>修改头像</h1>
+		</div>
+	</div>
+</header>
+<div class="nctouch-main-layout">
+	<ul class="nctouch-default-list" id="edit_info_panel">
+		<form>
+			<li class="list-group-item" style="text-align:center">
+			    <img id="hdImg" src="../../static/images/member_w.png"><br>
+				<span style="display:block; width:100%; text-align:center; padding-top:10px; color:#999; font-family:'宋体'; font-size:12px">注：头像尺寸正方形 建议256*256以下 (gif, jpg, png)</span>
+			</li>
+			<li class="list-group-item">
+				<div class="upload-btn"> 
+					<a href="javascript:void(0);"> 
+						<span style="width:100%;">
+							<input size="1" file_id="0" multiple="" id="upthumb" name="upthumb_tmp" type="file">
+						</span>
+						<div class="upload-button"><i></i>上传图像</div>
+						<input onclick="submit_form($(this))" value="" style="display:none" type="button">
+					</a> 
+				</div>
+			</li>
+		</form>
+	</ul>
+</div>
+<footer id="footer">
+	<div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/wap/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/wap/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>个人中心</p></a></li></ul></div>
+</footer>
+<script type="text/javascript" src="../../static/js/list.js"></script>
+</body>
+</html>

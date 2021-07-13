@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+    <title>余惜商城</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+    <script type="text/javascript" src="/static/js/host.js"></script>
+    <script type="text/javascript" src="/static/js/vue-2.5.16.js"></script>
+    <script type="text/javascript" src="/static/js/axios-0.18.0.min.js"></script>
+</head>
+<body>
+<div class="nctouch-home-top fixed-Width">
+    <header id="header" class="transparent">
+        <div class="logo"></div>
+        <div class="header-wrap"><a href="/wap/shop/search.html" class="header-inp"> <i class="icon"></i> <span class="search-input" id="keyword">请输入关键词</span> </a></div>
+        <div class="header-r"><a id="header-nav" href="#"><i class="message"></i><p>消息</p><sup></sup></a></div>
+    </header>
+    <div class="cohesive"></div>
+    <div class="adv_list" id="main-container1" style="visibility: visible;">
+        <div class="swipe-wrap" style="width: 1656px;">
+            <div class="item" data-index="0"
+                 style="width: 414px; left: 0px; transition-duration: 400ms; transform: translate(-414px, 0px) translateZ(0px);">
+                <a href="#">
+                    <img src="http://qgjubm5dg.hn-bkt.clouddn.com/s0_06504102561455991.png" alt="">
+                </a>
+            </div>
+            <div class="item" data-index="1"
+                 style="width: 414px; left: -414px; transition-duration: 400ms; transform: translate(0px, 0px) translateZ(0px);">
+                <a href="#2">
+                    <img src="http://qgjubm5dg.hn-bkt.clouddn.com/s0_06504102842245588.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nctouch-home-nav fixed-Width">
+    <ul>
+        <li><a href="/wap/shop/product_first_categroy.html"><span><i></i></span>
+            <p>分类</p></a></li>
+        <li><a href="#"><span><i></i></span>
+            <p>购物车</p></a></li>
+        <li><a href="#"><span><i></i></span>
+            <p>店铺街</p></a></li>
+        <li><a href="#"><span><i></i></span>
+            <p>每日签到</p></a></li>
+        <li><a href="#"><span><i></i></span>
+            <p>我的商城</p></a></li>
+        <li><a href="#"><span><i></i></span>
+            <p>我的订单</p></a></li>
+        <li><a href="#"><span><i></i></span>
+            <p>我的财产</p></a></li>
+        <li><a href="/wap/member/views_list.html"><span><i></i></span>
+            <p>我的足迹</p></a></li>
+    </ul>
+</div>
+<div class="nctouch-home-layout" id="main-container2">
+    <div class="nctouch-home-block">
+        <ul class="item-pic-list">
+            <li>
+                <a href="#"><img src="http://qgjubm5dg.hn-bkt.clouddn.com/s0_06504115301375496.png" alt=""></a>
+            </li>
+
+            <li>
+                <a href="#"><img src="http://qgjubm5dg.hn-bkt.clouddn.com/s0_06504115402439199.png" alt=""></a>http://qgjubm5dg.hn-bkt.clouddn.com</li>
+        </ul>
+    </div>
+    <div class="nctouch-home-block item-goods">
+        <div class="tit-bar"><span>猜你喜欢</span></div>
+        <ul class="goods-list">
+
+            
+            <li>
+                <a href="/wap/shop/goods/6.html">
+                    <div class="goods-pic"><img src="http://pic.myuxi.com/media/a1.jpg" alt=""></div>
+                    <dl class="goods-info">
+                        <dt class="goods-name">Apple iPhone 11 (A2223) 移动联通电信4G手机 256GB</dt>
+                        <dd class="goods-price">￥<em>6699.00</em></dd>
+                    </dl>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/wap/shop/goods/5.html">
+                    <div class="goods-pic"><img src="http://pic.myuxi.com/media/a1.jpg" alt=""></div>
+                    <dl class="goods-info">
+                        <dt class="goods-name">Apple iPhone 11 (A2223) 移动联通电信4G手机 128GB</dt>
+                        <dd class="goods-price">￥<em>5899.00</em></dd>
+                    </dl>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/wap/shop/goods/4.html">
+                    <div class="goods-pic"><img src="http://pic.myuxi.com/media/a1.jpg" alt=""></div>
+                    <dl class="goods-info">
+                        <dt class="goods-name">Apple iPhone 11 (A2223) 移动联通电信4G手机 64GB</dt>
+                        <dd class="goods-price">￥<em>5499.00</em></dd>
+                    </dl>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/wap/shop/goods/3.html">
+                    <div class="goods-pic"><img src="http://pic.myuxi.com/media/857b2bdf4882dd6f.jpg" alt=""></div>
+                    <dl class="goods-info">
+                        <dt class="goods-name">华为 HUAWEI P40 麒麟990 5G SoC芯片 徕卡三摄 全网通 8GB+256GB</dt>
+                        <dd class="goods-price">￥<em>4788.00</em></dd>
+                    </dl>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/wap/shop/goods/2.html">
+                    <div class="goods-pic"><img src="http://pic.myuxi.com/media/857b2bdf4882dd6f.jpg" alt=""></div>
+                    <dl class="goods-info">
+                        <dt class="goods-name">华为 HUAWEI P40 麒麟990 5G SoC芯片 徕卡三摄 全网通 8GB+128GB</dt>
+                        <dd class="goods-price">￥<em>4388.00</em></dd>
+                    </dl>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/wap/shop/goods/1.html">
+                    <div class="goods-pic"><img src="http://pic.myuxi.com/media/857b2bdf4882dd6f.jpg" alt=""></div>
+                    <dl class="goods-info">
+                        <dt class="goods-name">华为 HUAWEI P40 麒麟990 5G SoC芯片 徕卡三摄 全网通 6GB+128GB</dt>
+                        <dd class="goods-price">￥<em>4088.00</em></dd>
+                    </dl>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="nctouch-home-block">
+        <div class="item-pic">
+            <a href="#">
+                <img src="http://qgjubm5dg.hn-bkt.clouddn.com/s0_06504128314363307.png" alt="">
+            </a>
+        </div>
+    </div>
+</div>
+<footer id="footer">
+    <div id="footnav" class="footnav clearfix">
+        <ul>
+            <li><a href="/"><i class="home"></i><p>首页</p></a></li>
+            <li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li>
+            <li><a href="/wap/shop/search.html"><i class="search"></i><p>搜索</p></a></li>
+            <li><a href="/wap/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li>
+            <li><a href="/wap/member/member.html"><i class="member"></i><p>我的</p></a></li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>

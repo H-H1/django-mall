@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>余惜网 - 微信用户绑定</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/layui/css/layui.css" />
+    <script type="text/javascript" src="static/js/host.js"></script>
+    <script type="text/javascript" src="static/js/vue-2.5.16.js"></script>
+    <script type="text/javascript" src="static/js/axios-0.18.0.min.js"></script>
+    <style>
+        .pass_change_finish{
+            color: #999;
+            text-align: center;
+            font-size: 0.6rem;
+        }
+    </style>
+</head>
+<body>
+<div class="login-logo"><a href="/"><img src="static/images/logo.png" alt="您的网站名称"></a></div>
+<div class="wrapper">
+    <div class="main" id="app" v-cloak>
+        <div v-if="is_show_waiting" class="pass_change_finish mt20">请稍后...</div>
+        <div v-else>
+            <form id="reg_form" @submit.prevent="on_submit">
+                <div class="form-list txt-gray">
+                    <div class="form-input">
+                        <i class="mb-icon"></i>
+                        <input type="text" v-model="mobile" @blur="check_phone" name="phone" id="phone" placeholder="请输入手机号" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')">
+                        <span v-show="error_phone" class="error_tip">{{ error_phone_message }}</span>
+                    </div>
+                    <div class="form-input">
+                        <i class="yzm-icon"></i>
+                        <input type="text" v-model="sms_code" @blur="check_sms_code" name="msg_code" id="msg_code" placeholder="请输入验证码" maxlength="6">
+                        <button v-on:click="send_sms_code" class="send-yzm post">{{ sms_code_tip }}</button>
+                        <span v-show="error_sms_code" class="error_tip">{{ error_sms_code_message }}</span>
+                    </div>
+                    <div class="form-input">
+                        <i class="pwd-icon"></i>
+                        <input type="password" v-model="password" @blur="check_pwd" name="pwd" id="pwd" placeholder="请设置密码" maxlength="20">
+                        <span v-show="error_password" class="error_tip">密码最少6位，最长20位</span>
+                    </div>
+                    <div class="form-input">
+                        <i class="yqm-icon"></i>
+                        <input type="text" v-model="tuser" @blur="check_tuser_id" name="tuser" id="tuser" placeholder="请输入邀请码(可不填)" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')">
+						<span v-show="error_tuser_id" class="error_tip">{{ error_tuser_id_message }}</span>
+                    </div>
+                    <input class="submit-f-btn mt20 w100 post" type="submit" value="立即注册" name="">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/oauth_wx.js"></script>
+</body>
+</html>

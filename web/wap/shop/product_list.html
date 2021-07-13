@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="Author" contect="U2FsdGVkX1+liZRYkVWAWC6HsmKNJKZKIr5plAJdZUSg1A==">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-touch-fullscreen" content="yes">
+<meta name="format-detection" content="telephone=no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1">
+<title>商品列表</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_products_list.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_common.css">
+<script type="text/javascript" src="/static/js/host.js?201903"></script>
+<script src="/static/js/vue-2.5.16.js?201903"></script>
+<script src="/static/js/axios-0.18.0.min.js?201903"></script>
+</head>
+<body>
+<div id="applist" v-cloak>
+<header id="header" class="nctouch-product-header fixed">
+  <div class="header-wrap">
+    <div class="header-l"> <a href="javascript:history.go(-1)"> <i class="back"></i> </a> </div>
+    <div class="header-inp"> <i class="icon"></i> <span class="search-input" id="keyword">请输入关键词</span> </div>
+    <div class="header-r"> <a href="/wap/shop/product_first_categroy.html" class="categroy"><i></i>
+      </a> <a id="header-nav" href="javascript:void(0);"><i class="more"></i><sup></sup></a> </div>
+  </div>
+</header>
+<div class="goods-search-list-nav">
+    <ul>
+      <li><a @click="on_sort('-create_time')" :class="ordering=='-create_time'?'current':''">综合排序<i></i></a></li>
+      <li><a @click="on_sort('-sales')" :class="ordering=='-sales'?'current':''">人气</a></li>
+      <li v-if="pr_show"><a @click="on_sort('price')" :class="ordering=='-price'?'current':''">价格<i></i></a></li>
+	  <li v-else><a @click="on_sort('-price')" :class="ordering=='price'?'current':''">价格<i></i></a></li>
+    </ul>
+    <div class="browse-mode"><a @click="on_list"><span :class="{'browse-list':show_list,'browse-grid':!show_list}"></span></a></div>
+</div>
+<div class="nctouch-main-layout mt40">
+  <div id="product_list" :class="{'list':show_list,'grid':!show_list}">
+    <ul class="goods-secrch-list">
+		<li v-for="sku in skus" class="goods-item">
+				<span class="goods-pic">
+					<a :href="sku.url">
+						<img :src="sku.default_image_url">
+					</a>
+				</span>
+			<dl class="goods-info">
+				<dt class="goods-name">
+					<a :href="sku.url">
+						<h4>[[sku.name]]</h4>
+						<h6>01</h6>
+					</a>
+				</dt>
+				<dd class="goods-sale">
+					<a :href="sku.url"><span class="goods-price">￥<em>[[sku.price]]</em></span></a>
+				</dd>
+				<dd class="goods-assist">
+					<a :href="sku.url">
+						<span class="goods-sold">评价
+							<em>[[sku.comments]]</em>
+						</span>
+					</a>
+					<div class="goods-store">
+						<span class="icon-mall">自营</span>
+						<a href="javascript:void(0);">222<i></i></a>
+						<div class="sotre-creidt-layout" style="display: none;"></div>
+					</div>
+				</dd>
+			</dl>
+		</li>
+    </ul>
+    <div class="nctouch-norecord search" v-if="skus.length==0">
+      <div class="norecord-ico"><i></i></div>
+      <dl>
+    	  <dt>没有找到任何相关信息</dt>
+    	  <dd>选择或搜索其它商品分类/名称...</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<div class="fix-block-r">
+	<a href="/wap/member/views_list.html" class="browse-btn"><i></i></a>
+</div>
+</div>
+<footer id="footer">
+<div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/wap/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/wap/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>我的</p></a></li></ul></div>
+</footer>
+<script type="text/javascript" src="/static/js/list.js"></script>
+</body>
+</html>

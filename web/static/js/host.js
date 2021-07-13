@@ -1,0 +1,1 @@
+var host = 'http://api.myuxi.wang'; //修改后端接口域名

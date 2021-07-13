@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title>确认订单</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_cart.css">
+<script type="text/javascript" src="/static/js/host.js?201903"></script>
+<script src="/static/js/vue-2.5.16.js?201903"></script>
+<script src="/static/js/axios-0.18.0.min.js?201903"></script>
+<script>
+    var user_id = sessionStorage.user_id || localStorage.user_id;
+    var token = sessionStorage.token || localStorage.token;
+    if (!(user_id && token)) {
+        location.href = '/login.html?next=/wap/shop/cart_list.html';
+    }
+</script>
+<body>
+<div id="app">
+<header id="header" class="fixed">
+    <div class="header-wrap">
+        <div class="header-l"> <a href="javascript:history.go(-1)"> <i class="back"></i> </a> </div>
+        <div class="header-title">
+            <h1>确认订单</h1>
+        </div>
+        <div class="header-r"> <a id="header-nav" @click="showToggle"><i class="more"></i><sup></sup></a> </div>
+    </div>
+    <div class="nctouch-nav-layout" v-show="isShow">
+        <div class="nctouch-nav-menu"> <span class="arrow"></span>
+            <ul>
+                <li><a href="/index.html"><i class="home"></i>首页</a></li>
+                <li><a href="/search.html"><i class="search"></i>搜索</a></li>
+                <li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i>分类</a></li>
+                <li><a href="/wap/shop/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
+                <li><a href="/wap/member/member.html"><i class="member"></i>我的</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="nctouch-main-layout mb20">
+    <div class="nctouch-cart-block">
+        <div class="nctouch-cart-add-default"><a href="/wap/member/address_list.html"><i class="icon-add"></i>
+            <dl v-for="aa in addresses" v-if="aa.id == nowsite">
+                <dt >收货人：<span id="true_name">{{ aa.receiver }}</span><span id="mob_phone">{{ aa.mobile }}</span></dt>
+                <dd><span id="address">{{ aa.province }}{{ aa.city }}{{ aa.district }}{{ aa.place }}</span></dd>
+            </dl>
+            <i class="icon-arrow"></i></a></div>
+    </div>
+    <!--付款方式Begin-->
+    <div class="nctouch-cart-block mt5">
+        <div class="posr">
+            <h3><i class="pay"></i>支付方式：</h3>
+            <div class="current-con">
+                <select style="font-size:0.7rem; color:#555;border-radius:0.2rem;">
+                    <option value="1" v-model="pay_method">货到付款</option>
+                    <option value="2" v-model="pay_method">支付宝</option>
+                    <option value="3" v-model="pay_method">微信支付</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <!--付款方式End-->
+    <!--商品列表Begin-->
+    <div id="goodslist_before" class="mt5">
+        <div id="deposit">
+            <div class="nctouch-cart-container">
+                <dl class="nctouch-cart-store" style="display:none">
+                    <dt><i class="icon-store"></i>测试店铺<span data-store_id="1" class="store-cod-supported" style="display:none;">（该店铺不支持选定收货地址的货到付款）</span>
+                    </dt>
+                </dl>
+                <ul class="nctouch-cart-item" v-for="(sku,index) in skus">
+                    <li class="buy-item">
+                        <div class="goods-pic">
+                            <a v-bind:href="'/wap/shop/goods/' + sku.id + '.html'">
+                                <img :src="sku.default_image_url">
+                            </a>
+                        </div>
+                        <dl class="goods-info">
+                            <dt class="goods-name"><a href="/wap/goods/{{ sku.id }}">{{ sku.name }}</a></dt>
+                            <dd class="goods-type"></dd>
+                        </dl>
+                        <div class="goods-subtotal">
+                            <span class="goods-price">￥<em>{{ sku.price }}</em></span>
+                        </div>
+                        <div class="goods-num">
+                            <em>{{ sku.count }}</em>件
+                        </div>
+                        <div class="notransport transportId0" style="display:none;"><p>该商品不支持配送</p></div>
+                    </li>
+                </ul>
+                <div class="nctouch-cart-subtotal">
+                    <dl>
+                        <dt>物流配送</dt>
+                        <dd>运费<em id="storeFreight1">{{ freight }}</em>元</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--商品列表End-->
+    <!--底部总金额固定层Begin-->
+    <div class="nctouch-cart-bottom">
+        <div class="total"><span id="online-total-wrapper"></span>
+            <dl class="total-money">
+                <dt>合计总金额：</dt>
+                <dd>￥<em id="totalPrice">{{ payment_amount }}</em></dd>
+            </dl>
+        </div>
+        <div class="check-out ok"><a @click="on_order_submit" id="order_btn">提交订单</a></div>
+    </div>
+    <!--底部总金额固定层End-->
+    <div class="nctouch-bottom-mask">
+        <div class="nctouch-bottom-mask-bg"></div>
+        <div class="nctouch-bottom-mask-block">
+            <div class="nctouch-bottom-mask-top">
+                <p class="nctouch-cart-num">本次交易需在线支付<em id="onlineTotal">0.00</em>积分</p>
+                <p style="display:none" id="isPayed"></p>
+                <a href="javascript:void(0);" class="nctouch-bottom-mask-close"><i></i></a> </div>
+            <div class="nctouch-inp-con nctouch-inp-cart">
+                <ul class="form-box" id="internalPay">
+                    <p class="rpt_error_tip" style="display:none;color:red;"></p>
+                    <li class="form-item" id="wrapperUseRCBpay">
+                        <div class="input-box pl5">
+                            <label>
+                                <input type="checkbox" class="checkbox" id="useRCBpay" autocomplete="off" />
+                                使用充值卡支付 <span class="power"><i></i></span> </label>
+                            <p>可用充值卡余额 ￥<em id="availableRcBalance"></em></p>
+                        </div>
+                    </li>
+                    <li class="form-item" id="wrapperUsePDpy">
+                        <div class="input-box pl5">
+                            <label>
+                                <input type="checkbox" class="checkbox" id="usePDpy" autocomplete="off" />
+                                使用积分支付 <span class="power"><i></i></span> </label>
+                            <p>可用积分余额 ￥<em id="availablePredeposit"></em></p>
+                        </div>
+                    </li>
+                    <li class="form-item" id="wrapperPaymentPassword" style="display:none">
+                        <div class="input-box"> <span class="txt">输入支付密码</span>
+                            <input type="password" class="inp" id="paymentPassword" autocomplete="off" />
+                            <span class="input-del"></span> </div>
+                        <a href="../member/member_paypwd_step1.html" class="input-box-help" style="display:none"><i>i</i>尚未设置</a> </li>
+                </ul>
+                <div class="nctouch-pay">
+                    <div class="spacing-div"><span>在线支付方式</span></div>
+                    <div class="pay-sel" style="text-align:center;">
+                        <label style="display:none">
+                            <input type="radio" name="payment_code" class="checkbox" id="alipay" autocomplete="off" />
+                            <span class="alipay">支付宝</span></label>
+                        <label style="display:none">
+                            <input type="radio" name="payment_code" class="checkbox" id="wxpay_jsapi" autocomplete="off" />
+                            <span class="wxpay">微信</span></label>
+                    </div>
+                </div>
+                <div class="pay-btn"> <a href="javascript:void(0);" id="toPay" class="btn-l">确认支付</a> </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript" src="/static/js/place_order.js"></script>
+</body>
+</html>

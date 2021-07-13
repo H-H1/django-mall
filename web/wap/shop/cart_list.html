@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title>我的购物车</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_cart.css">
+<script type="text/javascript" src="/static/js/host.js?201903"></script>
+<script src="/static/js/vue-2.5.16.js?201903"></script>
+<script src="/static/js/axios-0.18.0.min.js?201903"></script>
+</head>
+<body>
+<div id="app" v-cloak>
+<header id="header" class="fixed">
+	<div class="header-wrap">
+		<div class="header-l"> <a href="javascript:history.go(-1)"> <i class="back"></i> </a> </div>
+		<div class="header-title">
+			<h1>购物车</h1>
+		</div>
+	</div>
+</header>
+<div class="nctouch-main-layout">
+	<div class="nctouch-cart-container" v-show="cart_ok">
+		<ul class="nctouch-cart-item" v-for="(sku,index) in cart">
+			<li cart_id="1" class="cart-litemw-cnt" >
+				<div class="goods-check">
+					<input type="checkbox" name="" v-model="sku.selected" @change="update_selected(index)">
+				</div>
+				<div class="goods-pic">
+					<a :href="'/wap/shop/goods/'+sku.id+'.html'"><img :src="sku.default_image_url"></a>
+				</div>
+				<dl class="goods-info">
+					<dt class="goods-name"><a :href="'/wap/shop/goods/'+sku.id+'.html'">{{ sku.name }}</a></dt>
+				</dl>
+				<div class="goods-del" cart_id="1"><a @click="on_delete(index)"></a></div>
+				<div class="goods-subtotal">
+					<span class="goods-price">￥<em>{{ sku.price }}</em></span>
+					<!--<span class="goods-sale"><em><i></i>手机专享</em></span>-->
+					<div class="value-box">
+                		<span class="minus"><a @click="on_minus(index)"></a></span>
+						<span><input type="text" class="buy-num buynum" v-model="sku.count" @focus="origin_input=sku.count" @blur="on_input(index)"></span>
+						<span class="add"><a @click="on_add(index)"></a></span>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div id="cart-list-wp" v-show="cat_empty">
+		<div class="nctouch-norecord cart">
+			<div class="norecord-ico"><i></i></div>
+			<dl>
+				<dt>您的购物车还是空的</dt>
+				<dd>去挑一些中意的商品吧</dd>
+			</dl>
+			<a href="/" class="btn">随便逛逛</a>
+		</div>
+	</div>
+</div>
+<div class="nctouch-cart-bottom" v-show="cart_ok">
+	<div class="all-check"><input class="all_checkbox" type="checkbox" name="" @change="on_selected_all" v-model="selected_all">全选</div>
+	<div class="total">
+		<dl class="total-money"><dt>合计总金额：</dt><dd>￥<em>{{total_selected_amount}}</em></dd></dl>
+	</div>
+	<div class="check-out ok">
+		<a href="place_order.html">确认信息</a>
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="/static/js/cart.js"></script>
+</body>
+</html>

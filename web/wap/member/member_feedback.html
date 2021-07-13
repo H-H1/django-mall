@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title>反馈留言</title>
+<link rel="stylesheet" type="text/css" href="../../static/css/base.css?201903">
+<link rel="stylesheet" type="text/css" href="../../static/css/nctouch_member.css?201903">
+<script type="text/javascript" src="../../static/js/host.js?201903"></script>
+<script src="../../static/js/vue-2.5.16.js?201903"></script>
+<script src="../../static/js/axios-0.18.0.min.js?201903"></script>
+<script>
+var user_id = sessionStorage.user_id || localStorage.user_id;
+var token = sessionStorage.token || localStorage.token;
+if (!(user_id && token)) {
+    location.href = '/login.html?next=/wap/member/member_feedback.html';
+}
+</script>
+</head>
+<body>
+<header id="header">
+  <div class="header-wrap">
+    <div class="header-l"> <a href="javascript:history.go(-1)"> <i class="back"></i> </a> </div>
+    <div class="header-title">
+      <h1>用户反馈</h1>
+    </div>
+  </div>
+</header>
+<div id="apps" v-cloak>
+<div class="nctouch-main-layout feedback">
+    <textarea v-model="content" name="content" class="textarea" placeholder="请描述一下您遇到的问题，（大于10字）"></textarea>
+    <div v-show="feed_error" class="error-tips">{{ feed_error_message }}</div>
+    <a @click="save_feedback" class="btn-l">提 交</a>
+</div>
+</div>
+<footer id="footer">
+	<div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/wap/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/wap/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>个人中心</p></a></li></ul></div>
+</footer>
+<script type="text/javascript" src="../../static/js/member_feedback.js"></script>
+</body>
+</html>

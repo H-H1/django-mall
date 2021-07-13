@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="../../static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/nctouch_member.css">
+    <script type="text/javascript" src="../../static/js/host.js"></script>
+    <script src="../../static/js/vue-2.5.16.js"></script>
+    <script src="../../static/js/axios-0.18.0.min.js"></script>
+    <title>会员中心</title>
+</head>
+<body>
+<div id="app">
+<header class="transparent">
+    <div class="header-wrap">
+        <div class="header-l"> <a href="member_account.html"><i class="set"></i></a></div>
+        <div class="header-title">
+            <h1>我的商城</h1>
+        </div>
+        <!--<div class="header-r"> <a id="header-nav" @click="showToggle"><i class="more"></i><sup></sup></a></div>-->
+    </div>
+    <div class="nctouch-nav-layout" v-show="isShow">
+        <div class="nctouch-nav-menu"> <span class="arrow"></span>
+            <ul>
+                <li><a href="/index.html"><i class="home"></i>首页</a></li>
+                <li><a href="../search.html"><i class="search"></i>搜索</a></li>
+                <li><a href="../shop/product_first_categroy.html"><i class="categroy"></i>分类</a></li>
+                <li><a href="javascript:void(0);"><i class="message"></i>消息</a></li>
+                <li><a href="../shop/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="scroller-body">
+    <div class="scroller-box">
+        <div class="member-top">
+            <div class="member-info">
+                <div class="user-avatar"><img :src="avatar"></div>
+                <div class="user-name"><span>{{ username }}<sup>V0</sup></span></div>
+                <div v-if="username === mobile"></div><div v-else><div class="user-name"><span style="font-weight:normal">{{ mobile }}</span> </div></div>
+            </div>
+            <div class="member-collect">
+                <span><a href="/login.html"><i class="favorite-goods"></i><p>商品收藏</p></a></span>
+                <span><a href="/login.html"><i class="favorite-store"></i><p>店铺收藏</p></a></span>
+                <span><a href="/login.html"><i class="goods-browse"></i><p>我的足迹</p></a></span>
+            </div>
+        </div>
+        <div class="member-center">
+            <!--<dl>-->
+            <!--    <dt>-->
+            <!--        <a href="#">-->
+            <!--            <h3><i class="mc-06"></i>我的保险箱</h3>-->
+            <!--            <h5>查看更多<i class="arrow-r"></i></h5>-->
+            <!--        </a>-->
+            <!--    </dt>-->
+            <!--    <dd>-->
+            <!--        <ul>-->
+            <!--            <li><a href="#"><em></em><i class="cc-01"></i><p>定时功能</p></a></li>-->
+            <!--            <li><a href="#"><i class="cc-02"></i><p>密码托管</p></a></li>-->
+            <!--            <li><a href="#"><i class="cc-03"></i><p>PLUS会员</p></a></li>-->
+            <!--            <li><a href="#"><i class="cc-04"></i><p>留个话</p></a></li>-->
+            <!--            <li><a href="#"><i class="cc-05"></i><p>受益人</p></a></li>-->
+            <!--        </ul>-->
+            <!--    </dd>-->
+            <!--</dl>-->
+            <dl class="mt5">
+                <dt><a href="order_list.html">
+                    <h3><i class="mc-01"></i>我的订单</h3>
+                    <h5>查看全部订单<i class="arrow-r"></i></h5>
+                </a></dt>
+                <dd>
+                    <ul id="order_ul">
+                        <li><a href="../shop/order_list.html?data-state=state_new"><em></em><i class="cc-01"></i><p>待付款</p></a></li>
+                        <li><a href="../shop/order_list.html?data-state=state_send"><i class="cc-02"></i><p>待收货</p></a></li>
+                        <li><a href="../shop/order_list.html?data-state=state_notakes"><i class="cc-03"></i><p>待自提</p></a></li>
+                        <li><a href="../shop/order_list.html?data-state=state_noeval"><i class="cc-04"></i><p>待评价</p></a></li>
+                        <li><a href="member_refund.html"><i class="cc-05"></i><p>退款/退货</p></a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl class="mt5">
+                <dt><a href="member_asset.html">
+                    <h3><i class="mc-02"></i>我的财产</h3>
+                    <h5>查看全部财产<i class="arrow-r"></i></h5>
+                </a></dt>
+                <dd>
+                    <ul id="asset_ul">
+                        <li><a href="predepositlog_list.html"><i class="cc-06"></i><p>余额</p></a></li>
+                        <li><a href="rechargecardlog_list.html"><i class="cc-07"></i><p>积分</p></a></li>
+                        <li><a href="voucher_list.html"><i class="cc-08"></i><p>E卡</p></a></li>
+                        <li><a href="pd_chongzhi.html"><i class="cc-09"></i><p>充值</p></a></li>
+                        <li><a href="points_fanyong_list.html?data-state=state_new"><i class="cc-09"></i><p>明细</p></a></li></ul>
+                </dd>
+            </dl>
+            <dl class="mt5">
+                <dt><a href="#">
+                    <h3><i class="mc-05"></i>分销中心</h3>
+                    <h5 id="distributor_level" style="color:#11cd6e"></h5>
+                </a></dt>
+                <dd>
+                    <ul id="distributor_ul">
+                        <li><a href="../distributor/dis_term.html"><i class="cc-12"></i><p>团队管理</p></a></li>
+                        <li><a href="../distributor/dis_spread.html"><i class="cc-13"></i><p>推广二维码</p></a></li>
+                        <li><a href="../distributor/dis_record.html"><i class="cc-14"></i><p>分销记录</p></a></li>
+                        <li><a href="../distributor/dis_commission.html"><i class="cc-15"></i><p>佣金明细</p></a></li>
+                        <li><a href="../distributor/withdraw.html"><i class="cc-16"></i><p>提现</p></a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <div id="public_areas"></div>
+            <dl class="mt5">
+                <dt><a href="address_list.html">
+                    <h3><i class="mc-03"></i>收货地址管理</h3>
+                    <h5><i class="arrow-r"></i></h5>
+                </a></dt>
+            </dl>
+            <dl style="border-top: solid 0.05rem #EEE;">
+                <dt><a href="member_account.html">
+                    <h3><i class="mc-04"></i>用户设置</h3>
+                    <h5><i class="arrow-r"></i></h5>
+                </a></dt>
+            </dl>
+        </div>
+    </div>
+<footer id="footer">
+        <div class="nctouch-footer-wrap posr"><div class="nav-text"><a @click="logout">退出</a><a href="/wap/member/member_feedback.html">反馈</a><!--<a href="/wap/help/article_list.html?ac_id=2">帮助</a>--><a href="#" class="gotop">返回顶部</a></div></div>
+        <div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/wap/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/wap/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>我的</p></a></li></ul></div>
+</footer>
+</div>
+</div>
+<script type="text/javascript" src="../../static/js/member_info.js"></script>
+</body>
+</html>

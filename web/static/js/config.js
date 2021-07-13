@@ -1,0 +1,11 @@
+document.write('<script language=\'javascript\' src=\'https:\/\/res.wx.qq.com\/open\/js\/jweixin-1.0.0.js\' ><\/script>');
+var BaseUrl = 'http://' + window.location.host;
+var SiteUrl = 'http://' + window.location.host + '/shop';
+var ApiUrl = 'http://' + window.location.host + '/mobile';
+var RealApiUrl = 'http://' + window.location.host + '/api';
+var pagesize = 10;
+var WapSiteUrl = 'http://' + window.location.host + '/wap';
+var IOSSiteUrl = 'http://' + window.location.host + '/app.ipa';
+var AndroidSiteUrl = 'http://' + window.location.host + '/app.apk';
+var WeiXinOauth = true;
+var share_config = {};

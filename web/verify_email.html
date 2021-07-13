@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <title>邮箱绑定成功 - 余惜网</title>
+    <link rel="stylesheet" type="text/css" href="static/css/base.css?201903">
+    <link rel="stylesheet" type="text/css" href="static/css/nctouch_member.css?201903">
+    <script type="text/javascript" src="static/js/host.js?201903"></script>
+    <script src="static/js/vue-2.5.16.js?201903"></script>
+    <script src="static/js/axios-0.18.0.min.js?201903"></script>
+</head>
+<body>
+<header id="header">
+    <div class="header-wrap">
+        <div class="header-l"> <a href="/wap/member/member.html"><i class="back"></i></a></div>
+        <div class="header-title">
+            <h1>邮箱绑定结果</h1>
+        </div>
+    </div>
+</header>
+<div id="email_result" v-cloak>
+    <div class="nctouch-main-layout">
+        <div class="nctouch-inp-con">
+            <div v-if="success" class="form-btn mt40"><span class="btn">恭喜您，邮箱验证成功！</span></div>
+            <div class="form-btn mt40" v-else><span class="btn">链接已失效，验证失败，请重新验证！</span></div>
+        </div>
+        <div class="register-mobile-tip"> 小提示：此邮箱将接收找回密码，订单通知等敏感性安全服务及提醒使用，请务必填写正确地址。</div>
+    </div>
+</div>
+    <footer id="footer">
+        <div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>个人中心</p></a></li></ul></div>
+    </footer>
+    <script>
+        var vm = new Vue({
+            el: '#email_result',
+            data: {
+                host,
+                success: true
+            },
+            // mounted: function(){
+            created: function(){
+                axios.get(this.host+'/emails/verification/'+ document.location.search)
+                    .then(response => {
+                        this.success = true;
+                    })
+                    .catch(error => {
+                        this.success = false;
+                    });
+            }
+        });
+    </script>
+</body>
+</html>

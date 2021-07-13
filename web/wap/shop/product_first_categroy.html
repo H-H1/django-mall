@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-touch-fullscreen" content="yes" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+	<title>商品分类</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/nctouch_categroy.css">
+	<script type="text/javascript" src="/static/js/host.js?201903"></script>
+	<script src="/static/js/vue-2.5.16.js?201903"></script>
+	<script src="/static/js/axios-0.18.0.min.js?201903"></script>
+</head>
+<body>
+<div id="applist" v-cloak>
+	<header id="header">
+		<div class="header-wrap">
+			<div class="header-l"><a href="/"><i class="back"></i></a></div>
+			<div class="header-inp"><i class="icon"></i><span class="search-input" id="keyword">请输入关键字</span></div>
+		</div>
+	</header>
+	<div class="nctouch-main-layout">
+		<div class="categroy-cnt">
+			<ul class="categroy-list">
+				<li class="category-item" :class="{selected:sel === 0}">
+					<a @click="brand" class="category-item-a brand">
+						<div class="ci-fcategory-ico">
+							<img src="/static/images/degault.png">
+						</div>
+						<div class="ci-fcategory-name">品牌推荐</div>
+					</a>
+				</li>
+				<li class="category-item" v-for="(category,index) in categorys" :class="{selected:category.id === sel}">
+					<a @click="cgory(category.id)" class="category-item-a category">
+						<div class="ci-fcategory-ico">
+							<img src="/static/images/degault.png">
+						</div>
+						<div class="ci-fcategory-name">{{ category.name }}</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="categroy-rgt">
+			<dl class="brands-recommend" v-show="pp_show">
+				<!--品牌-->
+				<dd v-for="brand in brands">
+					<a :href="'/wap/shop/product_list.html?brand='+brand.id">
+						<img :src="brand.logo">
+						<p>{{ brand.name }}</p>
+					</a>
+				</dd>
+			</dl>
+			<div v-if="pl_show">
+			<dl class="categroy-child-list" v-for="cgory in category">
+				<dt><a :href="'/wap/shop/product_list.html?id=' + cgory.id"><i class="col"></i>{{ cgory.name }}<i class="arrow-r"></i></a></dt>
+				<dd v-for="cg in cgory.sub"><a :href="'/wap/shop/product_list.html?id=' + cg.id"><img :src="cg.clogo"><p>{{ cg.name }}</p></a></dd>
+			</dl>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/wap/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/wap/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>我的</p></a></li></ul>
+</div>
+<script type="text/javascript" src="/static/js/categroy-frist-list.js"></script>
+</body>
+</html>

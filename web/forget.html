@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>找回密码 - 余惜网</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/layui/css/layui.css" />
+    <script type="text/javascript" src="static/js/host.js"></script>
+    <script type="text/javascript" src="static/js/vue-2.5.16.js"></script>
+    <script type="text/javascript" src="static/js/axios-0.18.0.min.js"></script>
+    <style>.login-logo{text-align: center;padding-top: 2rem;}</style>
+</head>
+<body>
+<div class="login-logo"><a href="/"><img src="static/images/logo.png" alt="余惜网"></a></div>
+<div class="wrapper">
+    <div class="main" id="app" v-cloak>
+        <form id="reg_form" @submit.prevent="on_submit">
+            <div class="form-list txt-gray">
+                <div class="form-input">
+                    <i class="mb-icon"></i>
+                    <input type="text" v-model="mobile" @blur="check_mobile" name="mobile" id="mobile" placeholder="请输入手机号" maxlength="11" oninput="value=value.replace(/[^\d]/g,'')">
+                    <span v-show="error_mobile" class="error_tip">{{ error_mobile_message }}</span>
+                </div>
+                <div class="form-input">
+                    <i class="yzm-icon"></i>
+                    <input type="text" v-model="sms_code" @blur="check_sms_code" name="msg_code" id="msg_code" placeholder="请输入验证码" maxlength="6">
+                    <button @click="send_sms_code" class="send-yzm post">{{ sms_code_tip }}</button>
+                    <span v-show="error_sms_code" class="error_tip">{{ error_sms_code_message }}</span>
+                </div>
+                <div class="form-input">
+                    <i class="pwd-icon"></i>
+                    <input type="password" v-model="password" @blur="check_pwd" name="pwd" id="pwd" placeholder="请重设密码" maxlength="20">
+                    <span v-show="error_password" class="error_tip">密码最少6位，最长20位</span>
+                </div>
+                <div class="form-input">
+                    <i class="pwd-icon"></i>
+                    <input type="password" v-model="password2" @blur="check_cpwd" name="pwd2" id="pwd2" placeholder="请确认密码" maxlength="20">
+                    <span v-show="error_check_password" class="error_tip">两次输入的密码不一致</span>
+                </div>
+                <input class="submit-f-btn mt20 w100 post" type="submit" value="找回密码" name="">
+                <div class="other-crl mt20 txt-center">
+                    已有账号，<a href="login.html">立即登录</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/forget.js"></script>
+</body>
+</html>

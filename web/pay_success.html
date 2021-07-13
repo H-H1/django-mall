@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title>支付成功</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_member.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_cart.css">
+<script type="text/javascript" src="/static/js/host.js?201903"></script>
+<script src="/static/js/vue-2.5.16.js?201903"></script>
+<script src="/static/js/axios-0.18.0.min.js?201903"></script>
+</head>
+<body>
+<div id="app">
+<header id="header" class="fixed">
+  <div class="header-wrap">
+    <div class="header-l"><a href="member.html"><i class="back"></i></a></div>
+    <span class="header-tab"><a href="javascript:void(0);" class="cur">支付信息</a></span>
+    <div class="header-r"> <a id="header-nav" @click="showToggle"><i class="more"></i><sup></sup></a> </div>
+  </div>
+  <div class="nctouch-nav-layout" v-show="isShow">
+        <div class="nctouch-nav-menu"> <span class="arrow"></span>
+            <ul>
+                <li><a href="/index.html"><i class="home"></i>首页</a></li>
+                <li><a href="/search.html"><i class="search"></i>搜索</a></li>
+                <li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i>分类</a></li>
+                <li><a href="/wap/shop/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
+                <li><a href="/wap/member/member.html"><i class="member"></i>我的</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<div class="nctouch-main-layout mb20">
+    <div class="nctouch-order-list" id="order-info-container">
+	    <div class="nctouch-order-item mt5">
+		    <div class="nctouch-order-item-con">
+			<div class="goods-subtotle">
+				<dl class="t">
+					<dt>实付款（含运费）</dt>
+					<dd>￥<em>{{amount}}</em></dd>
+				</dl>
+			</div>
+	    </div>
+	        <div class="nctouch-oredr-detail-block mt5">
+                <ul class="order-log">
+                    <li>支付交易号：{{trade_id}}</li>
+                </ul>
+	        </div>
+	        <div class="nctouch-oredr-detail-bottom">
+                <a @click="next_operate" class="btn cancel-order">{{ operate }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                host,
+                trade_id: '',
+                amount: '',
+                isShow: false,
+            },
+            mounted: function(){
+                axios.get(this.host+'/payment/status/'+document.location.search,{}, {
+                        responseType: 'json'
+                    })
+                    .then(response => {
+                        this.trade_id = response.data.trade_id;
+                        this.amount = response.data.amount;
+                    })
+                    .catch(error => {
+                        console.log(error.response);
+                    })
+            },
+            methods: {
+                // 点击显示/隐藏
+                showToggle:function(e){
+                    this.isShow = !this.isShow;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

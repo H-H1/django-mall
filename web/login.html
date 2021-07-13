@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>登录 - 余惜网</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/layui/css/layui.css" />
+    <script type="text/javascript" src="static/js/host.js"></script>
+    <script type="text/javascript" src="static/js/vue-2.5.16.js"></script>
+    <script type="text/javascript" src="static/js/axios-0.18.0.min.js"></script>
+    <style>
+        .login-logo{
+            text-align: center;padding-top: 3rem;
+        }
+        .user_error, pwd_error {
+            font-size: .55rem;
+        }
+        .social-auth{
+            position:fixed;
+            bottom:3.3rem;left: 0;
+            text-align: center;
+        }
+        .social-hr{
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+        .social-hr .line {
+            display: inline-block;
+            height: 1px;
+            width: 38%;
+            background-color: #e3e8ee}
+        .social-hr .text{
+            font-size: 12px;
+            color: #76818f;
+        }
+        .social-auth .social-auth-content{
+            margin-top: 12px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+        .social-auth-content .social-group{
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+        .social-group a, a:focus, a:hover{
+            cursor: pointer;
+            color: inherit;
+            text-decoration: none;
+        }
+        .social-group .social-link{
+            position: relative;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-logo"><a href="/"><img src="static/images/logo.png" alt="余惜网"></a></div>
+<div class="login" id='app'>
+    <form id="login-form" @submit.prevent="on_submit">
+        <div class="login-wrap">
+            <div class="login-form">
+                <div class="login-input">
+                    <i class="user-icon"></i>
+                    <input type="text" v-model="username" @blur="check_username" name="" placeholder="请输入用户名或手机号">
+                    <div v-show="error_username" class="user_error" v-cloak>请输入用户名或手机号</div>
+                </div>
+                <div class="login-input">
+                    <i class="pwd-icon"></i>
+                    <input type="password" v-model="password" @blur="check_pwd" name="pwd" placeholder="请输入密码">
+                    <div v-show="error_pwd" class="pwd_error" v-cloak>{{ error_pwd_message }}</div>
+                </div>
+                <div class="checkbox">
+                    <input type="checkbox"v-model="remember" name="remember" id="remember" class="checkbox-icon">记住登录
+                </div>
+                <input class="submit-btn mt20 w100 post" type="submit" name="" value="立即登录">
+            </div>
+        </div>
+    </form>
+    <div class="social-auth w100">
+        <div class="social-hr">
+            <span class="line"></span>
+            <span class="text">快捷登录</span>
+            <span class="line"></span>
+        </div>
+        <div class="social-auth-content">
+            <div class="social-group">
+                <a class="social-link wechat" @click="wx_login"><img src="static/images/wechat.png" alt="微信登录"></a>
+                <a class="social-link qq" @click="qq_login"><img src="static/images/qq.png" alt="QQ登录"></a>
+            </div>
+        </div>
+    </div>
+    <div class="other-btnwrap">
+        <a href="reg.html">注册</a> |
+        <a href="forget.html">找回密码</a> |
+        <a href="/down">APP</a>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/login.js"></script>
+</body>
+</html>

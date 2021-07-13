@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <title>邮箱绑定</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/base.css?201903">
+    <link rel="stylesheet" type="text/css" href="../../static/css/nctouch_member.css?201903">
+    <script type="text/javascript" src="../../static/js/host.js?201903"></script>
+    <script src="../../static/js/vue-2.5.16.js?201903"></script>
+    <script src="../../static/js/axios-0.18.0.min.js?201903"></script>
+    <script>
+        var user_id = sessionStorage.user_id || localStorage.user_id;
+        var token = sessionStorage.token || localStorage.token;
+        if (!(user_id && token)) {
+            location.href = '/login.html?next=/wap/member/member.html';
+        }
+    </script>
+</head>
+<body>
+<header id="header">
+    <div class="header-wrap">
+        <div class="header-l"> <a href="member_account.html"> <i class="back"></i> </a>     </div>
+        <div class="header-title">
+            <h1>邮箱绑定</h1>
+        </div>
+    </div>
+</header>
+<div id="apps" v-cloak>
+<div class="nctouch-main-layout">
+    <div class="nctouch-inp-con">
+        <div v-if="set_email">
+            <ul class="form-box">
+                <li class="form-item">
+                    <h4>邮 箱：</h4>
+                    <div class="input-box">
+                        <input v-model="email" type="email" class="inp" placeholder="输入邮箱">
+                    </div>
+                </li>
+            </ul>
+            <div class="form-btn mt40"><input @click="save_email" type="button" name="" value="确认邮箱" class="btn"></div>
+            <div class="error-tips" v-if="email_error">{{ email_error_message }}</div>
+        </div>
+        <div v-else-if="email">
+            <ul class="form-box">
+                <li class="form-item">
+                    <h4>邮 箱：</h4>
+                    <div class="input-box">
+                        <span class="inp">{{ email }}</span>
+                    </div>
+                </li>
+            </ul>
+            <div v-if="email_active" class="form-btn mt40"><span class="btn">已验证</span></div>
+            <div class="form-btn mt40" v-else><button class="btn" @click="save_email" :disabled="send_email_btn_disabled" type="button">{{ send_email_tip }}</button></div>
+        </div>
+        <div v-else>
+            <div class="form-btn mt40"><button class="btn" @click="set_email=true" type="button">设置</button></div>
+        <div>
+        </div>
+        </div>
+    </div>
+<div class="register-mobile-tip"> 小提示：此邮箱将接收找回密码，订单通知等敏感性安全服务及提醒使用，请务必填写正确地址。</div>
+</div>
+<footer id="footer">
+	<div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/wap/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/wap/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>个人中心</p></a></li></ul></div>
+</footer>
+<script type="text/javascript" src="../../static/js/member_email_bind.js"></script>
+</body>
+</html>

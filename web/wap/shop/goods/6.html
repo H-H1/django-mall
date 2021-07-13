@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-touch-fullscreen" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+<title>商品详情页 - 6</title>
+<link rel="stylesheet" type="text/css" href="/static/css/base.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_common.css">
+<link rel="stylesheet" type="text/css" href="/static/css/nctouch_products_detail.css">
+<script type="text/javascript" src="/static/js/host.js?201903"></script>
+<script src="/static/js/vue-2.5.16.js?201903"></script>
+<script src="/static/js/axios-0.18.0.min.js?201903"></script>
+</head>
+<body>
+<div id="app">
+<header id="header" :class="{'transparent':show_tran,'posf':!show_tran}">
+	<div class="header-wrap">
+		<div class="header-l">
+			<a href="javascript:history.go(-1)"> <i class="back"></i>
+			</a>
+		</div>
+		<ul class="header-nav" v-show="isNav">
+			<li class="cur"><a @click="goodsDesc">商品</a></li>
+			<li><a @click="goodsDetail">详情</a></li>
+			<li><a @click="goodsComment">评价</a></li>
+		</ul>
+		<div class="header-r">
+			<a id="header-nav" @click="showToggle"><i class="more"></i><sup></sup></a>
+		</div>
+	</div>
+	<div class="nctouch-nav-layout" v-show="isShow">
+		<div class="nctouch-nav-menu">
+			<span class="arrow"></span>
+			<ul>
+				<li><a href="/index.html"><i class="home"></i>首页</a></li>
+				<li><a href="/search.html"><i class="search"></i>搜索</a></li>
+				<li><a href="/wap/shop/product_first_categroy.html"><i class="categroy"></i>分类</a></li>
+				<li><a href="/wap/shop/cart_list.html"><i class="cart"></i>购物车<sup></sup></a></li>
+				<li><a href="/wap/member/member.html"><i class="member"></i>我的</a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+<!--轮播图-->
+<div id="product_detail_html" style="position: relative; z-index: 1;">
+	<div class="goods-detail-top">
+	<div class="goods-detail-pic" id="mySwipe" style="visibility: visible;">
+		<ul style="width: 800px;">
+			<li data-index="0" style="width: 400px; left: 0px; transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"><img src=http://pic.myuxi.com/media/a1.jpg></li>
+			<li data-index="1" style="width: 400px; left: -400px; transition-duration: 0ms; transform: translate(400px, 0px) translateZ(0px);"><img src=http://pic.myuxi.com/media/a1.jpg></li>
+		</ul>
+	</div>
+	<div class="goods-detail-turn">
+		<ul>
+			<li class="cur"></li>
+			<li class=""></li>
+		</ul>
+	</div>
+	</div>
+	<div class="goods-detail-cnt">
+		<div class="goods-detail-name">
+			<dl>
+				<dt>Apple iPhone 11 (A2223) 移动联通电信4G手机 256GB</dt>
+				<dd>嗨购秒杀节，iPhone11领券立减900元！</dd>
+			</dl>
+		</div>
+		<div class="goods-detail-price">
+			<dl>
+				<dt>￥<em>6699.00</em></dt>
+			</dl>
+			<span class="sold">0</span>
+		</div>
+		<!--评价-->
+		<div class="goods-detail-comment">
+			<div class="title">
+				<a @click="goodsComment">商品评价<span class="rate">好评率<em>100%</em></span><span class="rate-num">（0人评价）</span><div class="item-more"></div></a>
+			</div>
+			<div class="comment-info"></div>
+		</div>
+		<!--店铺信息-->
+		<div class="goods-detail-store">
+			<a href="/wap/store/?store_id=1">
+				<div class="store-name">
+					<i class="icon-store"></i>
+					官方旗舰店
+					<span class="icon-mall" style="display:none;">自营店铺</span>
+				</div>
+				<div class="store-rate">
+				<span class="equal">描述相符
+					<em>5</em>
+					<i>平</i>
+				</span>
+					<span class="equal">服务态度
+					<em>5</em>
+					<i>平</i>
+				</span>
+					<span class="equal">发货速度
+					<em>5</em>
+					<i>平</i>
+				</span>
+				</div>
+				<div class="item-more"></div>
+			</a>
+		</div>
+		<!--店铺推荐-->
+		<div class="goods-detail-recom">
+			<h4>店铺推荐</h4>
+			<ul>
+				<li>
+					<a href="product_detail.html?goods_id=1">
+						<div class="pic"><img src=http://pic.myuxi.com/media/a1.jpg></div>
+						<dl>
+							<dt>这个是一个随机推送商品功能 未开发</dt>
+							<dd>￥<em>6699.00</em></dd>
+						</dl>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="goods-detail-bottom"><a @click="goodsDetail">点击查看商品详情</a></div>
+		<div class="goods-detail-foot block">
+			<div class="otreh-handle">
+				<a href="/wap/kefu/?goods=1" class="kefu"><i></i><p>客服</p></a>
+				<a href="/wap/shop/cart_list.html" class="cart"><i></i><p>购物车</p></a>
+			</div>
+			<div class="buy-handle ">
+				<a @click="showSpec" class="animation-up add-cart">加入购物车</a>
+				<a href="/wap/shop/buynow.html?goods=1" class="animation-up buy-now">立即购买</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!--购买数量-->
+<div id="product_detail_spec_html" class="nctouch-bottom-mask up" v-show="specShow">
+	<div class="nctouch-bottom-mask-bg"></div>
+	<div class="nctouch-bottom-mask-block">
+		<div class="nctouch-bottom-mask-top goods-options-info">
+			<div class="goods-pic">
+				<img src="http://pic.myuxi.com/media/857b2bdf4882dd6f.jpg">
+			</div>
+			<dl>
+				<dt>Apple iPhone 11 (A2223) 移动联通电信4G手机 256GB</dt>
+				<dd class="goods-price">￥<em>4088.00</em><span class="goods-storage">库存：件</span></dd>
+			</dl>
+			<a @click="showSpec" class="nctouch-bottom-mask-close"><i></i></a>
+		</div>
+		<div class="nctouch-bottom-mask-rolling" id="product_roll">
+			<div class="goods-options-stock" style="transition-timing-function: cubic-bezier(0.1, 0.57, 0.1, 1); transition-duration: 0ms; transform: translate(0px, 0px) translateZ(0px);"></div>
+		</div>
+		<div class="goods-option-value">
+			购买数量
+			<div class="value-box">
+				<span class="minus">
+					<a @click="on_minus()">&nbsp;</a>
+				</span>
+				<span>
+					<input type="text" class="buy-num" v-model="sku_count" value="1">
+				</span>
+				<span class="add">
+					<a @click="sku_count++"> </a>
+				</span>
+			</div>
+		</div>
+		<div class="goods-option-foot">
+			<div class="otreh-handle">
+				<a href="/wap/kefu/?goods=1" class="kefu">
+					<i></i>
+					<p>客服</p>
+				</a>
+				<a href="/wap/shop/cart_list.html" class="cart">
+					<i></i>
+					<p>购物车</p>
+				</a>
+			</div>
+			<div class="buy-handle">
+				<a @click="add_cart" class="add-cart">加入购物车</a>
+				<a href="/wap/shop/buynow.html?goods=1" class="buy-now">立即购买</a>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="/static/js/goods_detail.js"></script>
+</body>
+</html>

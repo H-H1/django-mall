@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1" />
+    <title>地址管理</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/base.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/nctouch_member.css">
+    <script type="text/javascript" src="../../static/js/host.js"></script>
+    <script src="../../static/js/vue-2.5.16.js"></script>
+    <script src="../../static/js/axios-0.18.0.min.js"></script>
+    <style>
+        .error_tip{
+            font-size: 0.6rem;
+            line-height:0.8rem;
+            color: #ffcb57;
+            text-align: right;
+        }
+        .error-tips{display: none}
+    </style>
+    <script>
+        var user_id = sessionStorage.user_id || localStorage.user_id;
+        var token = sessionStorage.token || localStorage.token;
+        if (!(user_id && token)) {
+            location.href = '/login.html?next=/wap/member/member.html';
+        }
+    </script>
+</head>
+<body>
+<div id="app" v-cloak>
+<header id="header">
+    <div class="header-wrap">
+        <div class="header-l"><a href="member.html"><i class="back"></i></a></div>
+        <div class="header-title">
+            <h1>地址管理</h1>
+        </div>
+        <div class="header-r"><a id="header-nav" @click="show_add"><i class="add"></i></a></div>
+    </div>
+</header>
+<div class="nctouch-main-layout mb20" v-show="is_show_view">
+    <div class="nctouch-address-list" id="address_list">
+        <ul v-for="(address, index) in addresses">
+            <li>
+                <dl>
+                    <dt>
+                        <span class="name">{{ address.receiver }}</span>
+                        <span class="phone">{{ address.mobile }}</span>
+                    </dt>
+                    <dd>{{ address.province }} {{address.city}} {{ address.district }} {{ address.place }}</dd>
+                    <dd>邮箱：{{ address.email }}</dd>
+                </dl>
+                <div class="handle"><em v-if="address.id==default_address_id">默认地址</em>
+                    <span>
+					<a v-if="address.id!=default_address_id" @click="set_default(index)">设为默认</a> <a @click="show_edit(index)"><i class="edit"></i>编辑</a><a @click="del_address(index)" class="deladdress"><i class="del"></i>删除</a>
+				</span>
+                </div>
+            </li>
+        </ul>
+        <a class="btn-l mt5" @click="show_add">添加新地址</a>
+    </div>
+</div>
+<footer id="footer">
+    <div id="footnav" class="footnav clearfix"><ul><li><a href="/"><i class="home"></i><p>首页</p></a></li><li><a href="/shop/product_first_categroy.html"><i class="categroy"></i><p>分类</p></a></li><li><a href="/shop/search.html"><i class="search"></i><p>搜索</p></a></li><li><a href="/shop/cart_list.html"><span id="cart_count"><i class="cart"></i></span><p>购物车</p></a></li><li><a href="/wap/member/member.html"><i class="member"></i><p>个人中心</p></a></li></ul></div>
+</footer>
+<div class="nctouch-main-layout pop_con" style="margin-top:0" v-show="is_show_edit">
+    <form>
+        <div class="nctouch-inp-con">
+            <ul class="form-box">
+                <li class="form-item">
+                    <h4>收货人姓名</h4>
+                    <div class="input-box">
+                        <input type="text" class="inp" name="" v-model="form_address.receiver" @blur="check_receiver">
+                        <span class="input-del"></span>
+                    </div>
+                    <span v-show="error_receiver" class="error_tip">请填写收件人</span>
+                </li>
+                <li class="form-item">
+                    <h4>联系手机</h4>
+                    <div class="input-box">
+                        <input type="tel" class="inp" name="" v-model="form_address.mobile" @blur="check_mobile">
+                        <span class="input-del"></span> </div>
+                    <span v-show="error_mobile" class="error_tip">手机信息有误</span>
+                </li>
+                <li class="form-item">
+                    <h4>省级选择</h4>
+                    <div class="input-box">
+                        <div class="form_group">
+                            <select v-model="form_address.province_id">
+                                <option v-for="province in provinces" v-bind:value="province.id">{{ province.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-item">
+                    <h4>二级区域</h4>
+                    <div class="input-box">
+                        <div class="form_group">
+                            <select v-model="form_address.city_id">
+                                <option v-for="city in cities" v-bind:value="city.id">{{ city.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-item">
+                    <h4>地区选择</h4>
+                    <div class="input-box">
+                        <div class="form_group">
+                            <select v-model="form_address.district_id">
+                                <option v-for="district in districts" v-bind:value="district.id">{{ district.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </li>
+                <li class="form-item">
+                    <h4>详细地址</h4>
+                    <div class="input-box">
+                        <input type="text" class="inp" name="" v-model="form_address.place" @blur="check_place">
+                    </div>
+                    <span v-show="error_place" class="error_tip">请填写地址信息</span>
+                </li>
+                <li class="form-item">
+                    <h4>邮箱地址</h4>
+                    <div class="input-box">
+                        <input type="text" class="inp" name="" v-model="form_address.email" @blur="check_email">
+                    </div>
+                    <span v-show="error_email" class="error_tip">邮箱信息有误</span>
+                </li>
+            </ul>
+            <div class="error-tips"></div>
+            <div class="form-btn ok"><a class="btn" @click="save_address">保存地址</a></div>
+        </div>
+    </form>
+</div>
+</div>
+<script type="text/javascript" src="../../static/js/user_center_address.js"></script>
+</body>
+</html>

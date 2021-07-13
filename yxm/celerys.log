@@ -1,0 +1,20 @@
+[2021-04-04 20:43:14,965: INFO/MainProcess] Connected to redis://127.0.0.1:6379/14
+[2021-04-04 20:43:14,982: INFO/MainProcess] mingle: searching for neighbors
+[2021-04-04 20:43:16,049: INFO/MainProcess] mingle: all alone
+[2021-04-04 20:43:16,088: WARNING/MainProcess] /home/sixstar/.virtualenvs/py3_django/lib/python3.6/site-packages/celery/fixups/django.py:204: UserWarning: Using settings.DEBUG leads to a memory
+            leak, never use this setting in production environments!
+  leak, never use this setting in production environments!''')
+
+[2021-04-04 20:43:16,088: INFO/MainProcess] worker@ubuntu ready.
+[2021-04-04 20:43:16,226: INFO/MainProcess] Received task: send_sms_code[3c1ba8ae-f8e1-4d0e-9c5b-e5f3cf060f7a]  
+[2021-04-04 20:43:16,229: INFO/MainProcess] Received task: send_sms_code[96d5c04b-f53b-4b3e-8595-db79078c06a6]  
+[2021-04-04 20:43:16,236: INFO/MainProcess] Received task: send_sms_code[8860b2b0-1167-4857-bcda-722295a90529]  
+[2021-04-04 20:43:16,238: INFO/MainProcess] Received task: send_sms_code[283408ae-0194-4358-a239-3c514e824f75]  
+[2021-04-04 20:43:16,346: INFO/ForkPoolWorker-4] 发送短信验证码【失败】【moblie:13222222221】
+[2021-04-04 20:43:16,350: INFO/ForkPoolWorker-4] Task send_sms_code[8860b2b0-1167-4857-bcda-722295a90529] succeeded in 0.11186551500031783s: None
+[2021-04-04 20:43:16,347: INFO/ForkPoolWorker-2] 发送短信验证码【失败】【moblie:13222222221】
+[2021-04-04 20:43:16,352: INFO/ForkPoolWorker-2] Task send_sms_code[283408ae-0194-4358-a239-3c514e824f75] succeeded in 0.10997752600087551s: None
+[2021-04-04 20:43:16,359: INFO/ForkPoolWorker-1] 发送短信验证码【失败】【moblie:13333333332】
+[2021-04-04 20:43:16,360: INFO/ForkPoolWorker-1] Task send_sms_code[96d5c04b-f53b-4b3e-8595-db79078c06a6] succeeded in 0.12911479700051132s: None
+[2021-04-04 20:43:16,367: INFO/ForkPoolWorker-3] 发送短信验证码【失败】【moblie:13333333332】
+[2021-04-04 20:43:16,368: INFO/ForkPoolWorker-3] Task send_sms_code[3c1ba8ae-f8e1-4d0e-9c5b-e5f3cf060f7a] succeeded in 0.1375519319990417s: None
